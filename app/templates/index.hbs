@@ -1,0 +1,78 @@
+<div class="row">
+
+    <div class="col-md-4 col-xs-4">
+
+        <div class="well well-lg text-center">
+            <h4>Find Your Product</h4>
+            <button class="btn btn-default btn-lg btn-block" {{action 'levelOneClicked'}}>
+              {{levelOneSelection.name}}
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </button>
+            <br/>
+          {{#if levelTwoSelection}}
+              <button class="btn btn-default btn-lg btn-block" {{action 'levelTwoClicked'}}>
+                {{levelTwoSelection.name}} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </button>
+              <br/>
+          {{else}}
+              <button class="btn btn-default btn-lg btn-block" {{action 'levelTwoClicked'}}>
+                  All <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </button>
+              <br/>
+          {{/if}}
+            <button class="btn btn-primary btn-lg btn-block" {{action 'viewProductsClicked'}}>VIEW PRODUCTS</button>
+            <br/>
+            <br/>
+
+            <div class="text-center prices">
+                <h4><div class="pull-left">Min: R{{displayedMinPrice}} </div>Price Range<div class="pull-right">Max: R{{displayedMaxPrice}}</div></h4>
+            </div>
+            <br/>
+          {{range-slider start=actualMinMaxPrice range=priceRange change="sliderChanged" slide="sliderSliding"}}
+            <br/>
+          {{availableItems.length}} Products Available
+            <br/>
+            Reset All
+        </div>
+
+    </div>
+
+    <div class="col-md-8 col-xs-8">
+
+      {{#if levelOneDisplayed}}
+          <div class="well well-lg">
+              <h4>Select a Category</h4>
+            {{#each item in levelOneItems}}
+                <button class="btn btn-default btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
+            {{/each}}
+          </div>
+      {{/if}}
+
+      {{#if levelTwoDisplayed}}
+          <div class="well well-lg">
+              <h4>Select the type of {{levelOneSelection.name}}</h4>
+            {{#each item in levelTwoItems}}
+                <button class="btn btn-default btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
+            {{/each}}
+          </div>
+      {{/if}}
+
+    </div>
+
+</div>
+
+<div class="row">
+  {{#if noItemsFound}}
+      Sorry, no products match your search. Please try again.
+      <br/>
+      <img src="img/sad-cupcake.png" height="200px">
+  {{/if}}
+  {{#each item in productsToDisplay}}
+    {{item.name}}  {{item.price}} <br/>
+  {{/each}}
+</div>
+
+
+<div class="row">
+    <img src="img/puppy.jpg" height="200px">
+</div>
