@@ -20,12 +20,13 @@
               </button>
               <br/>
           {{/if}}
-            <button class="btn btn-primary btn-lg btn-block" {{action 'viewProductsClicked'}}>VIEW PRODUCTS</button>
             <br/>
-            <br/>
-
             <div class="text-center prices">
-                <h4><div class="pull-left">Min: R{{displayedMinPrice}} </div>Price Range<div class="pull-right">Max: R{{displayedMaxPrice}}</div></h4>
+                <h4>
+                    <div class="pull-left">Min: R{{displayedMinPrice}} </div>
+                    Price Range
+                    <div class="pull-right">Max: R{{displayedMaxPrice}}</div>
+                </h4>
             </div>
             <br/>
           {{range-slider start=actualMinMaxPrice range=priceRange change="sliderChanged" slide="sliderSliding"}}
@@ -33,6 +34,9 @@
           {{availableItems.length}} Products Available
             <br/>
             Reset All
+            <br/>
+            <br/>
+            <button class="btn btn-primary btn-lg btn-block" {{action 'viewProductsClicked'}}>VIEW PRODUCTS</button>
         </div>
 
     </div>
@@ -71,7 +75,6 @@
     {{item.name}}  {{item.price}} <br/>
   {{/each}}
 </div>
-
 
 <div class="row">
     <img src="img/puppy.jpg" height="200px">

@@ -60,17 +60,15 @@ export default Ember.Route.extend({
     return items;
   },
   setupController: function (controller, model) {
-    var minMaxPrices = getMinMax(model);
+    var minMaxPrices = getMinMaxPrices(model);
     controller.set('displayedMinPrice', minMaxPrices[0]);
     controller.set('displayedMaxPrice', minMaxPrices[1]);
-    controller.set('userMinPrice', minMaxPrices[0]);
-    controller.set('userMaxPrice', minMaxPrices[1]);
     controller.set('levelOneSelection', model[0]);
     controller.set('model', model);
   }
 });
 
-function getMinMax(items) {
+function getMinMaxPrices(items) {
   var itemsWithPrices = items.filter(function (item) {
     return ('price' in item);
   });

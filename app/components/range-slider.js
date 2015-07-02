@@ -68,8 +68,6 @@ export default Ember.Component.extend({
 
   setRange: Ember.observer('range', function () {
     var that = this;
-    //console.log("rebuilding " + that.get('range').min + " " + that.get('range').max);
-    //console.log("rebuilding " + that.get('start')[0] + " " + that.get('start')[1]);
     this.slider = this.$().noUiSlider({
       start: that.get('start'),
       step: that.get('step'),
