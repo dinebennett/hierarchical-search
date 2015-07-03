@@ -31,30 +31,30 @@ export default Ember.Route.extend({
       {id: 19, name: "Mixers", parent: 4},
       {id: 20, name: "Other Pastry Tools", parent: 4},
 
-      {id: 21, name: "Flour", parent: 5, price: 35}, //Level 3, Parent: Dry Ingredients
-      {id: 22, name: "Baking Powder", parent: 5, price: 30},
-      {id: 23, name: "Baking Soda", parent: 5, price: 25},
-      {id: 24, name: "Cocoa", parent: 5, price: 50},
+      {id: 21, name: "Flour", parent: 5, price: 35, brand: "Snowflake"}, //Level 3, Parent: Dry Ingredients
+      {id: 22, name: "Baking Powder", parent: 5, price: 30, brand: "Snowflake"},
+      {id: 23, name: "Baking Soda", parent: 5, price: 25, brand: "Royal"},
+      {id: 24, name: "Cocoa", parent: 5, price: 50, brand: "Nestle"},
 
-      {id: 25, name: "Eggs", parent: 6, price: 40}, //Level 3, Parent: Dairy
-      {id: 26, name: "Full Cream Milk", parent: 6, price: 12},
-      {id: 27, name: "Low Fat Milk", parent: 6, price: 12},
-      {id: 28, name: "Butter", parent: 6, price: 50},
+      {id: 25, name: "Eggs", parent: 6, price: 40, brand: "Nulaid"}, //Level 3, Parent: Dairy
+      {id: 26, name: "Full Cream Milk", parent: 6, price: 12, brand: "Clover"},
+      {id: 27, name: "Low Fat Milk", parent: 6, price: 12, brand: "Clover"},
+      {id: 28, name: "Butter", parent: 6, price: 50, brand: "Clover"},
 
-      {id: 29, name: "White Sugar", parent: 7, price: 35}, //Level 3, Parent: Sugars
-      {id: 30, name: "Brown Sugar", parent: 7, price: 35},
-      {id: 31, name: "Castor Sugar", parent: 7, price: 40},
-      {id: 32, name: "Icing Sugar", parent: 7, price: 50},
+      {id: 29, name: "White Sugar", parent: 7, price: 35, brand: "Hullets"}, //Level 3, Parent: Sugars
+      {id: 30, name: "Brown Sugar", parent: 7, price: 35, brand: "Hullets"},
+      {id: 31, name: "Castor Sugar", parent: 7, price: 40, brand: "Hullets"},
+      {id: 32, name: "Icing Sugar", parent: 7, price: 50, brand: "Hullets"},
 
-      {id: 33, name: "Pink Food Colouring", parent: 8, price: 50}, //Level 3, Parent: Colours and Flavours
-      {id: 34, name: "Blue Food Colouring", parent: 8, price: 50},
-      {id: 35, name: "Vanilla Extract", parent: 8, price: 100},
-      {id: 36, name: "Rose Water", parent: 8, price: 80},
+      {id: 33, name: "Pink Food Colouring", parent: 8, price: 50, brand: "Cake Flora"}, //Level 3, Parent: Colours and Flavours
+      {id: 34, name: "Blue Food Colouring", parent: 8, price: 50, brand: "Cake Flora"},
+      {id: 35, name: "Vanilla Extract", parent: 8, price: 100, brand: "Nielsen Massey"},
+      {id: 36, name: "Rose Water", parent: 8, price: 80, brand: "Nielsen Massey"},
 
-      {id: 37, name: "Rainbow Vermicelli", parent: 9, price: 45}, //Level 3, Parent: "Sprinkles and Confetti"
-      {id: 38, name: "Silver Vermicelli", parent: 9, price: 55},
-      {id: 39, name: "Pink/Red/White Hearts", parent: 9, price: 50},
-      {id: 40, name: "Rainbow Stars", parent: 9, price: 50}
+      {id: 37, name: "Rainbow Vermicelli", parent: 9, price: 45, brand: "Nicoletta"}, //Level 3, Parent: "Sprinkles and Confetti"
+      {id: 38, name: "Silver Vermicelli", parent: 9, price: 55, brand: "Nicoletta"},
+      {id: 39, name: "Pink/Red/White Hearts", parent: 9, price: 50, brand: "Nicoletta"},
+      {id: 40, name: "Rainbow Stars", parent: 9, price: 50, brand: "Nicoletta"}
 
     ];
     return items;

@@ -1,7 +1,6 @@
 <div class="row">
 
     <div class="col-md-4">
-
         <div class="well well-lg text-center">
             <h4>Find Your Product</h4>
             <button class="btn btn-default btn-lg btn-block" {{action 'levelOneClicked'}}>
@@ -12,7 +11,11 @@
               {{levelTwoSelectionString}} <span class={{levelTwoChevron}} aria-hidden="true"></span>
             </button>
             <br/>
+            <button class="btn btn-default btn-lg btn-block" {{action 'brandsClicked'}}>
+              {{brandSelectionString}} <span class={{brandsChevron}} aria-hidden="true"></span>
+            </button>
             <br/>
+
             <div class="text-center prices">
                 <h4>
                     <div class="pull-left">R{{displayedMinPrice}}</div>
@@ -30,14 +33,13 @@
             <br/>
             <button class="btn btn-primary btn-lg btn-block" {{action 'viewProductsClicked'}}>VIEW PRODUCTS</button>
         </div>
-
     </div>
 
     <div class="col-md-8">
 
       {{#if levelOneDisplayed}}
           <div class="well well-lg">
-              <h4>Select a Category</h4>
+              <h4>Select a Category:</h4>
             {{#each item in levelOneItems}}
               {{#if item.selected}}
                   <button class="btn btn-primary btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
@@ -50,7 +52,7 @@
 
       {{#if levelTwoDisplayed}}
           <div class="well well-lg">
-              <h4>Select the type of {{levelOneSelection.name}}</h4>
+              <h4>Select a Sub-category:</h4>
             {{#each item in levelTwoItems}}
               {{#if item.selected}}
                   <button class="btn btn-primary btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
@@ -61,18 +63,35 @@
           </div>
       {{/if}}
 
+      {{#if brandsDisplayed}}
+          <div class="well well-lg">
+              <h4>Select Your Brands:</h4>
+            {{#each brand in availableBrands}}
+              {{#if brand.selected}}
+                  <button class="btn btn-primary btn-lg" {{action 'brandSelectionClicked' brand.name}}>{{brand.name}} </button>
+              {{else }}
+                  <button class="btn btn-default btn-lg" {{action 'brandSelectionClicked' brand.name}}>{{brand.name}} </button>
+              {{/if}}
+            {{/each}}
+          </div>
+      {{/if}}
+
     </div>
 
 </div>
 
 <div class="row">
-  {{#if noItemsFound}}
-      Sorry, no products match your search. Please try again.
-      <br/>
-      <img src="img/sad-cupcake.png" height="200px">
-  {{/if}}
-  {{#each item in productsToDisplay}}
-    {{item.name}}  {{item.price}} <br/>
+  {{!--{{#if noItemsFound}}
+        Sorry, no products match your search. Please try again.
+        <br/>
+        <img src="img/sad-cupcake.png" height="200px">
+    {{/if}}--}}
+  {{#each item in availableItems}}
+      <div class="product col-md-1">
+        {{item.name}} <br/>
+          R {{item.price}} <br/>
+        {{item.brand}}
+      </div>
   {{/each}}
 </div>
 

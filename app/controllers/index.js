@@ -5,17 +5,23 @@ export default Ember.Controller.extend({
   levelOneSelection: null,
   levelTwoDisplayed: false,
   levelTwoSelection: [],
+  brandsDisplayed: false,
+  brandsSelected: [],
   productsToDisplay: null,
-  levelOneChevron: function() {
-   return (this.get('levelOneDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
+  levelOneChevron: function () {
+    return (this.get('levelOneDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
   }.property('levelOneDisplayed'),
-  levelTwoChevron: function() {
+  levelTwoChevron: function () {
     return (this.get('levelTwoDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
   }.property('levelTwoDisplayed'),
+  brandsChevron: function () {
+    return (this.get('brandsDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
+  }.property('brandsDisplayed'),
   actualMinMaxPrice: function () {
-    return getMinMaxPrice(this.get('availableItemsNoPriceLimits'));
-  }.property('availableItemsNoPriceLimits'),
+    return getMinMaxPrice(this.get('availableItemsNoBrandsOrPriceLimits'));
+  }.property('availableItemsNoBrandsOrPriceLimits'),
   priceRange: function () {
+    console.log("updating price range");
     var range = {
       'min': [this.get('actualMinMaxPrice')[0]],
       'max': [this.get('actualMinMaxPrice')[1]]
@@ -26,7 +32,7 @@ export default Ember.Controller.extend({
     var allLevelOneItems = this.get('model').filter(function (item) {
       return !('parent' in item);
     });
-    return markSelectedItemsInArray(allLevelOneItems,[this.get('levelOneSelection')]);
+    return markSelectedItemsInArray(allLevelOneItems, [this.get('levelOneSelection')]);
   }.property('levelOneSelection'),
   levelTwoItems: function () {
     var that = this;
@@ -37,22 +43,39 @@ export default Ember.Controller.extend({
         return false;
       }
     });
-    return markSelectedItemsInArray(allLevelTwoItems,this.get('levelTwoSelection'));
-  }.property('levelOneSelection','levelTwoSelection'),
-  levelTwoSelectionString: function() {
+    return markSelectedItemsInArray(allLevelTwoItems, this.get('levelTwoSelection'));
+  }.property('levelOneSelection', 'levelTwoSelection'),
+  levelTwoSelectionString: function () {
     if (this.get('levelTwoSelection').length > 1) {
-      return "Multiple...";
+      return "Multiple Selections...";
     } else if (this.get('levelTwoSelection').length === 1) {
       return (this.get('levelTwoSelection'))[0].name;
     }
-    return "All";
+    return "Product Options...";
   }.property('levelTwoSelection'),
   availableItems: function () {
-    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), this.get('displayedMinPrice'), this.get('displayedMaxPrice'));
-  }.property('levelOneSelection', 'levelTwoSelection', 'displayedMinPrice', 'displayedMaxPrice'),
-  availableItemsNoPriceLimits: function () {
-    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'));
+    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), this.get('brandsSelected'), this.get('displayedMinPrice'), this.get('displayedMaxPrice'));
+  }.property('levelOneSelection', 'levelTwoSelection', 'brandsSelected', 'displayedMinPrice', 'displayedMaxPrice'),
+  availableItemsNoBrandsOrPriceLimits: function () {
+    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), []);
   }.property('levelOneSelection', 'levelTwoSelection'),
+  availableBrands: function () {
+    var brands = [];
+    this.get('availableItemsNoBrandsOrPriceLimits').forEach(function (item) {
+      if (('brand' in item) && !(isBrandInList(item.brand, brands))) {
+        brands.push({name: item.brand});
+      }
+    });
+    return markSelectedBrandsInArray(brands, this.get('brandsSelected'));
+  }.property('availableItemsNoBrandsOrPriceLimits', 'brandsSelected'),
+  brandSelectionString: function () {
+    if (this.get('brandsSelected').length > 1) {
+      return "Multiple Brands...";
+    } else if (this.get('brandsSelected').length === 1) {
+      return (this.get('brandsSelected'))[0].name;
+    }
+    return "All Brands";
+  }.property('brandsSelected'),
   noItemsFound: function () {
     if (this.get('productsToDisplay') === null) {
       return false;
@@ -63,11 +86,18 @@ export default Ember.Controller.extend({
   actions: {
     levelOneClicked: function () {
       this.set('levelTwoDisplayed', false);
+      this.set('brandsDisplayed', false);
       this.set('levelOneDisplayed', !this.get('levelOneDisplayed'));
     },
     levelTwoClicked: function () {
       this.set('levelOneDisplayed', false);
+      this.set('brandsDisplayed', false);
       this.set('levelTwoDisplayed', !this.get('levelTwoDisplayed'));
+    },
+    brandsClicked: function () {
+      this.set('levelOneDisplayed', false);
+      this.set('levelTwoDisplayed', false);
+      this.set('brandsDisplayed', !this.get('brandsDisplayed'));
     },
     levelOneSelectionClicked: function (selectionId) {
       var selectedItem = this.get('model').filter(function (item) {
@@ -75,6 +105,7 @@ export default Ember.Controller.extend({
       })[0];
       this.set('levelOneSelection', selectedItem);
       this.set('levelTwoSelection', []);
+      this.set('brandsSelected', []);
       this.set('displayedMinPrice', this.get('actualMinMaxPrice')[0]);
       this.set('displayedMaxPrice', this.get('actualMinMaxPrice')[1]);
     },
@@ -82,9 +113,13 @@ export default Ember.Controller.extend({
       var selectedItem = this.get('model').filter(function (item) {
         return (item.id === selectionId);
       })[0];
+      this.set('brandsSelected', []);
       this.set('levelTwoSelection', toggleSelectionInList(selectedItem, Ember.copy(this.get('levelTwoSelection'))));
       this.set('displayedMinPrice', this.get('actualMinMaxPrice')[0]);
       this.set('displayedMaxPrice', this.get('actualMinMaxPrice')[1]);
+    },
+    brandSelectionClicked: function (brand) {
+      this.set('brandsSelected', toggleBrandInList(brand, Ember.copy(this.get('brandsSelected'))))
     },
     viewProductsClicked: function () {
       this.set('productsToDisplay', this.get('availableItems'));
@@ -110,7 +145,7 @@ export default Ember.Controller.extend({
  * @param userMaxPrice The user selected maximum price.
  * @returns {*} All available items.
  */
-function getAvailableItems(levelTwoSelection, levelTwoItems, items, userMinPrice, userMaxPrice) {
+function getAvailableItems(levelTwoSelection, levelTwoItems, items, brandsToInclude, userMinPrice, userMaxPrice) {
   var levelTwoCategoriesToInclude = [];
   if (levelTwoSelection.length > 0) {
     levelTwoCategoriesToInclude = levelTwoSelection;
@@ -130,6 +165,11 @@ function getAvailableItems(levelTwoSelection, levelTwoItems, items, userMinPrice
         }
       }
     });
+
+    if ((brandsToInclude.length > 0) && !isBrandInList(item.brand, brandsToInclude)) {
+      check = false;
+    }
+
     return (check === true);
   });
 }
@@ -168,9 +208,9 @@ function getMinMaxPrice(items) {
  * @param list  List of items.
  * @returns {*} The modified list.
  */
-function toggleSelectionInList(newItem,list) {
+function toggleSelectionInList(newItem, list) {
   var idx = -1;
-  list.forEach(function(item, index) {
+  list.forEach(function (item, index) {
     if (item.id === newItem.id) {
       idx = index;
     }
@@ -190,14 +230,52 @@ function toggleSelectionInList(newItem,list) {
  * @param selectedItems
  * @returns {*}
  */
-function markSelectedItemsInArray(array,selectedItems) {
-  return array.map(function(item) {
+function markSelectedItemsInArray(array, selectedItems) {
+  return array.map(function (item) {
     var emberItem = Ember.Object.create(item);
-    selectedItems.forEach(function(selectedItem) {
+    selectedItems.forEach(function (selectedItem) {
       if (item.id === selectedItem.id) {
         emberItem.selected = true;
       }
     });
     return emberItem;
   });
+}
+
+function toggleBrandInList(newItem, list) {
+  var idx = -1;
+  list.forEach(function (item, index) {
+    if (item.name === newItem) {
+      idx = index;
+    }
+  });
+  if (idx > -1) {
+    list.splice(idx, 1);
+  } else {
+    list.push({name: newItem});
+  }
+  return list;
+}
+
+function isBrandInList(brand, list) {
+  var isInList = false;
+  list.forEach(function (item) {
+    if (item.name === brand) {
+      isInList = true;
+    }
+  });
+  return isInList;
+}
+
+function markSelectedBrandsInArray(array, selectedBrands) {
+  var map = array.map(function (brand) {
+    var emberItem = Ember.Object.create(brand);
+    selectedBrands.forEach(function (selectedBrand) {
+      if (brand.name === selectedBrand.name) {
+        emberItem.selected = true;
+      }
+    });
+    return emberItem;
+  });
+  return map;
 }
