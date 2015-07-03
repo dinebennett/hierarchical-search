@@ -5,20 +5,19 @@
         <div class="well well-lg text-center">
             <h4>Find Your Product</h4>
             <button class="btn btn-default btn-lg btn-block" {{action 'levelOneClicked'}}>
-              {{levelOneSelection.name}}
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              {{levelOneSelection.name}} <span class={{levelOneChevron}} aria-hidden="true"></span>
             </button>
             <br/>
             <button class="btn btn-default btn-lg btn-block" {{action 'levelTwoClicked'}}>
-              {{levelTwoSelectionString}} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              {{levelTwoSelectionString}} <span class={{levelTwoChevron}} aria-hidden="true"></span>
             </button>
             <br/>
             <br/>
             <div class="text-center prices">
                 <h4>
-                    <div class="pull-left">Min: R{{displayedMinPrice}} </div>
+                    <div class="pull-left">R{{displayedMinPrice}}</div>
                     Price Range
-                    <div class="pull-right">Max: R{{displayedMaxPrice}}</div>
+                    <div class="pull-right">R{{displayedMaxPrice}}</div>
                 </h4>
             </div>
             <br/>
@@ -40,7 +39,11 @@
           <div class="well well-lg">
               <h4>Select a Category</h4>
             {{#each item in levelOneItems}}
-                <button class="btn btn-default btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
+              {{#if item.selected}}
+                  <button class="btn btn-primary btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
+              {{else}}
+                  <button class="btn btn-default btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
+              {{/if}}
             {{/each}}
           </div>
       {{/if}}
@@ -49,7 +52,11 @@
           <div class="well well-lg">
               <h4>Select the type of {{levelOneSelection.name}}</h4>
             {{#each item in levelTwoItems}}
-                <button class="btn btn-default btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
+              {{#if item.selected}}
+                  <button class="btn btn-primary btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
+              {{else }}
+                  <button class="btn btn-default btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
+              {{/if}}
             {{/each}}
           </div>
       {{/if}}

@@ -2,10 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   levelOneDisplayed: false,
-  //levelOneSelection - set in router
+  levelOneSelection: null,
   levelTwoDisplayed: false,
   levelTwoSelection: [],
   productsToDisplay: null,
+  levelOneChevron: function() {
+   return (this.get('levelOneDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
+  }.property('levelOneDisplayed'),
+  levelTwoChevron: function() {
+    return (this.get('levelTwoDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
+  }.property('levelTwoDisplayed'),
   actualMinMaxPrice: function () {
     return getMinMaxPrice(this.get('availableItemsNoPriceLimits'));
   }.property('availableItemsNoPriceLimits'),
@@ -17,23 +23,22 @@ export default Ember.Controller.extend({
     return range;
   }.property('actualMinMaxPrice'),
   levelOneItems: function () {
-    //TODO: Mark which one is selected
-    var modelItems = this.get('model');
-    return modelItems.filter(function (item) {
+    var allLevelOneItems = this.get('model').filter(function (item) {
       return !('parent' in item);
     });
-  }.property(''),
+    return markSelectedItemsInArray(allLevelOneItems,[this.get('levelOneSelection')]);
+  }.property('levelOneSelection'),
   levelTwoItems: function () {
-    //TODO: Mark which ones are selected
     var that = this;
-    return this.get('model').filter(function (item) {
+    var allLevelTwoItems = this.get('model').filter(function (item) {
       if ('parent' in item) {
         return (item.parent === that.get('levelOneSelection.id'));
       } else {
         return false;
       }
     });
-  }.property('levelOneSelection'),
+    return markSelectedItemsInArray(allLevelTwoItems,this.get('levelTwoSelection'));
+  }.property('levelOneSelection','levelTwoSelection'),
   levelTwoSelectionString: function() {
     if (this.get('levelTwoSelection').length > 1) {
       return "Multiple...";
@@ -176,4 +181,23 @@ function toggleSelectionInList(newItem,list) {
     list.push(newItem);
   }
   return list;
+}
+
+/**
+ * Adds selected = true to all the selected items.
+ * In the interest of Functional Programming, there are no side effects.
+ * @param array
+ * @param selectedItems
+ * @returns {*}
+ */
+function markSelectedItemsInArray(array,selectedItems) {
+  return array.map(function(item) {
+    var emberItem = Ember.Object.create(item);
+    selectedItems.forEach(function(selectedItem) {
+      if (item.id === selectedItem.id) {
+        emberItem.selected = true;
+      }
+    });
+    return emberItem;
+  });
 }
