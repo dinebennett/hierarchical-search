@@ -2,19 +2,19 @@
 
 Thank you for checking out my hierarchical search demo.
 
-## View Online
+### View Online
 
 To view it online, please go to: http://dinebennett.github.io/hierarchical-search/dist/
 
-** I kindly request that you use Google Chrome to view. **
+**I kindly request that you use Google Chrome to view.**
 
-## Viewing it on your own machine
+### Viewing it on your own machine
 
 * Clone my repository: `git clone https://github.com/dinebennett/hierarchical-search.git` 
 * navigate to /hierarchical-search/dist
 * open index.html in your browser
 
-## Technologies Used
+### Technologies Used
 
 * EmberJS framework (http://emberjs.com/)
 * Twitter Bootstrap for basic styling
@@ -23,14 +23,14 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 * Google Fonts for custom fonts
 * Github and Github Pages (doh!)
 
-## Wishlist
+### Wishlist
 
 * Add footer and mention images and "inspired by" ao.com
 * More comments in code
 
-## Limitations
+### Limitations
 
-** Due to time restrictions my demo has the following limitations: **
+**Due to time restrictions my demo has the following limitations:**
 
 * I don't store the user's selection in localStorage, so unfortunately when they refresh their selections are lost.
 * I haven't optimized for mobile
@@ -38,14 +38,14 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 * No unit tests or acceptance tests :(
 * I don't use an API. Everything is set up in routes/index.js. The route can however fetch data from an API in future.
 
-## Main files for code review
+### Main files for code review
 
 * app/components/range-slider
 * app/controllers/index.js
 * app/routes/index.js
 * app/templates/index.hbs
 
-# How to install Development Version
+# Want to install the development version?
 
 ## Prerequisites
 
