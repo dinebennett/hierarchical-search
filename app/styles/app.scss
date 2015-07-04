@@ -1,0 +1,142 @@
+//== Colors
+
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:             lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+
+$brand-primary:         darken(rgb(245, 110, 166), 6.5%) !default; // #337ab7
+$brand-success: #39932f !default;
+$brand-info:            #5bc0de !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #d9534f !default;
+$font-family-sans-serif: Arial, Helvetica, sans-serif !default;
+
+@import "bootstrap";
+
+.h4-custom {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.products {
+  margin: auto 0px;
+}
+
+.product {
+  max-width: 225px;
+  margin-right: 10px;
+  display: inline-block;
+  padding: 10px;
+}
+
+.h1-custom {
+  font-family: 'Abril Fatface';
+  font-size: 70px;
+  color: $brand-primary;
+  letter-spacing: 3px;
+}
+
+.h1-mobile {
+  font-family: 'Abril Fatface';
+  color: $brand-primary;
+}
+
+.h3-custom {
+  font-size: 30px;
+  font-weight: 100;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-image: url('../img/sprinkles.jpg');
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+
+.container {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding-bottom: 120px;
+}
+
+body > .ember-view {
+  height: 100%;
+}
+
+.price {
+  color: $brand-primary;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.prices {
+  margin-top: 30px;
+  color: $brand-primary;
+}
+
+.products-available .find-your-product {
+  font-size: 20px;
+}
+
+.products-available {
+  margin-top: 30px;
+}
+
+.btn-lg {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.slider {
+  padding: 0px 15px;
+}
+
+.product > p {
+  margin-bottom: 5px;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.glyphicon {
+  margin-left: 10px;
+}
+
+.brand {
+  margin-top: 10px;
+}
+
+.no-products {
+  font-family: 'Covered By Your Grace', cursive;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px 30px;
+  font-size: 40px;
+}
+
+.welcome {
+  font-family: 'Covered By Your Grace', cursive;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px 30px;
+  font-size: 40px;
+}
+
+.footer {
+  width: 100%;
+  margin-top: -60px;
+  position: relative;
+  clear: both;
+  background-color: $gray-darker;
+  color: $gray-light;
+  padding-top: 20px;
+  height: 60px;
+}
+

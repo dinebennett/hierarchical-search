@@ -1,0 +1,121 @@
+<div class="row hidden-xs">
+
+    <div class="col-md-4 col-xs-6">
+        <div class="well well-lg text-center">
+            <h4 class="h4-custom find-your-product">FIND YOUR PRODUCT</h4>
+            <button class="btn btn-default btn-lg btn-block" {{action 'levelOneClicked'}}>{{levelOneSelectionString}} <span
+                    class={{levelOneChevron}} aria-hidden="true"></span>
+            </button>
+            <button class="btn btn-default btn-lg btn-block" disabled={{enableSubCategories}} {{action 'levelTwoClicked'}}>{{levelTwoSelectionString}} <span
+                    class={{levelTwoChevron}} aria-hidden="true"></span>
+            </button>
+            <button class="btn btn-default btn-lg btn-block" disabled={{enableSubCategories}} {{action 'brandsClicked'}}>{{brandSelectionString}} <span
+                    class={{brandsChevron}} aria-hidden="true"></span>
+            </button>
+            <h4 class="text-center h4-custom prices">
+                <div class="pull-left">R{{displayedMinPrice}}</div>
+                Price Range
+                <div class="pull-right">R{{displayedMaxPrice}}</div>
+            </h4>
+            <div class="slider">{{range-slider disabled=enableSubCategories start=actualMinMaxPrice range=priceRange change="sliderChanged" slide="sliderSliding"}}</div>
+            <h4 class="h4-custom products-available">{{availableItems.length}} Products Available</h4>
+
+            <p><a href=# {{action 'resetAll'}}>Reset All</a></p>
+            <button class="btn btn-success btn-lg btn-block" {{action 'viewProductsClicked'}}>VIEW PRODUCTS</button>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-xs-6">
+
+      {{#if displayWelcome}}
+          <div class="welcome text-center">
+              <p>Welcome to Diné's Cupcake Bake Shop! </p>
+
+              <p>Please use the hierarchical search (on the left) to find your products.</p>
+          </div>
+      {{/if}}
+
+      {{#if levelOneDisplayed}}
+          <div class="well well-lg">
+              <h4 class="h4-custom">Select a Category</h4>
+            {{#each item in levelOneItems}}
+              {{#if item.selected}}
+                  <button class="btn btn-primary btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
+              {{else}}
+                  <button class="btn btn-default btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
+              {{/if}}
+            {{/each}}
+          </div>
+      {{/if}}
+
+      {{#if levelTwoDisplayed}}
+          <div class="well well-lg">
+              <h4 class="h4-custom">Select Product Options</h4>
+            {{#each item in levelTwoItems}}
+              {{#if item.selected}}
+                  <button class="btn btn-primary btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
+              {{else }}
+                  <button class="btn btn-default btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
+              {{/if}}
+            {{/each}}
+          </div>
+      {{/if}}
+
+      {{#if brandsDisplayed}}
+          <div class="well well-lg">
+              <h4 class="h4-custom">Select Your Brands</h4>
+            {{#each brand in availableBrands}}
+              {{#if brand.selected}}
+                  <button class="btn btn-primary btn-lg" {{action 'brandSelectionClicked' brand.name}}>{{brand.name}} </button>
+              {{else }}
+                  <button class="btn btn-default btn-lg" {{action 'brandSelectionClicked' brand.name}}>{{brand.name}} </button>
+              {{/if}}
+            {{/each}}
+          </div>
+      {{/if}}
+
+      {{#if displayProducts}}
+        {{#if noProductsFound}}
+            <div class="no-products text-center">
+                <img src="img/sad-cupcake.jpg" height="200px">
+                <br/>
+                <br/>
+
+                <p>No products match your search criteria.</p>
+
+                <p>Please try again.</p>
+            </div>
+        {{else}}
+            <h4><em>Your products appear in descending price order.</em></h4>
+            <br/>
+        {{/if}}
+          <div class="products">
+            {{#each item in availableItems}}
+                <div class="product well">
+                  {{#if item.image}}
+                      <img class="img-rounded" height=200px src={{item.image}}>
+                  {{/if}}
+                  {{#unless item.image}}
+                      <img class="img-rounded" height=200px src="img/no-image.jpg">
+                  {{/unless}}
+                    <br/>
+
+                    <p class="brand">{{item.brand}}</p>
+
+                    <p class="product-name">{{item.name}} </p>
+
+                    <p class="price"> R {{item.price}} </p>
+                </div>
+            {{/each}}
+          </div>
+      {{/if}}
+
+    </div>
+</div>
+
+<div class="row visible-xs">
+    <div class="well">
+        <p>Unfortunately this demo is not suitable for small screens :( </p>
+        <p>Please use a different device, or resize your browser window.</p>
+    </div>
+</div>
