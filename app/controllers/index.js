@@ -21,11 +21,11 @@ export default Ember.Controller.extend({
     if (this.get('displayProducts')) {
       return false;
     } else if ((this.get('levelOneDisplayed'))) {
-      return false
+      return false;
     } else if ((this.get('levelTwoDisplayed'))) {
-      return false
+      return false;
     } else if ((this.get('brandsDisplayed'))) {
-      return false
+      return false;
     }
 
     return true;
@@ -171,7 +171,6 @@ export default Ember.Controller.extend({
       this.set('brandsDisplayed', !this.get('brandsDisplayed'));
     },
     resetAll: function() {
-      var selectedItem = this.get('model')[0];
       this.set('displayProducts', false);
       this.set('levelOneDisplayed', false);
       this.set('levelTwoDisplayed', false);
