@@ -1,10 +1,117 @@
+//== Colors
+
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:             lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+
+$brand-primary:         darken(rgb(255, 121, 133), 6.5%) !default; // #337ab7
+$brand-success: #39932f !default;
+$brand-info:            #5bc0de !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #d9534f !default;
+$font-family-sans-serif: Arial, Helvetica, sans-serif !default;
+
+//== Wells
+
+$well-bg: #e8e8e8 !default;
+$well-border:                 darken($well-bg, 7%) !default;
+
+//** Global textual link color.
+$link-color:            $brand-primary !default;
+//** Link hover color set via `darken()` function.
+$link-hover-color:      darken($link-color, 15%) !default;
+//** Link hover decoration.
+$link-hover-decoration: underline !default;
+
 @import "bootstrap";
 
-.prices h4 {
+.h4-custom {
   font-weight: 900;
+  margin-bottom: 10px;
 }
 
 .product {
-  width: 120px;
-  height: 100px;
+  width: 200px;
+  height: 300px;
+  margin-right: 10px;
+  display: inline-block;
+  padding: 10px;
+}
+
+.h1-custom {
+  font-family: 'Abril Fatface';
+  font-size: 55px;
+}
+
+.h3-custom {
+  font-family: 'Playfair Display';
+  font-size: 30px;
+  font-weight: 100;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-image: url('../img/jimmies.jpg');
+  background-size: 100% auto;
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-color: #E8E8E8;;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+body > .ember-view {
+  height: 100%;
+}
+
+.price {
+  color: $brand-primary;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.prices {
+  margin-top: 30px;
+  color: $brand-primary;
+}
+
+.products-available .find-your-product {
+  font-size: 20px;
+}
+
+.products-available {
+  margin-top: 30px;
+}
+
+.btn-lg {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.slider {
+  padding: 0px 15px;
+}
+
+.product > p {
+  margin-bottom: 5px;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.glyphicon {
+  margin-left: 10px;
 }

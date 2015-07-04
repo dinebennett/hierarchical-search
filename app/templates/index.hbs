@@ -2,36 +2,23 @@
 
     <div class="col-md-4">
         <div class="well well-lg text-center">
-            <h4>Find Your Product</h4>
-            <button class="btn btn-default btn-lg btn-block" {{action 'levelOneClicked'}}>
-              {{levelOneSelection.name}} <span class={{levelOneChevron}} aria-hidden="true"></span>
+            <h4 class="h4-custom find-your-product">FIND YOUR PRODUCT</h4>
+            <button class="btn btn-default btn-lg btn-block" {{action 'levelOneClicked'}}>{{levelOneSelection.name}} <span class={{levelOneChevron}} aria-hidden="true"></span>
             </button>
-            <br/>
-            <button class="btn btn-default btn-lg btn-block" {{action 'levelTwoClicked'}}>
-              {{levelTwoSelectionString}} <span class={{levelTwoChevron}} aria-hidden="true"></span>
+            <button class="btn btn-default btn-lg btn-block" {{action 'levelTwoClicked'}}>{{levelTwoSelectionString}} <span class={{levelTwoChevron}} aria-hidden="true"></span>
             </button>
-            <br/>
-            <button class="btn btn-default btn-lg btn-block" {{action 'brandsClicked'}}>
-              {{brandSelectionString}} <span class={{brandsChevron}} aria-hidden="true"></span>
+            <button class="btn btn-default btn-lg btn-block" {{action 'brandsClicked'}}>{{brandSelectionString}} <span class={{brandsChevron}} aria-hidden="true"></span>
             </button>
-            <br/>
+            <h4 class="text-center h4-custom prices">
+                <div class="pull-left">R{{displayedMinPrice}}</div>
+                Price Range
+                <div class="pull-right">R{{displayedMaxPrice}}</div>
+            </h4>
+            <div class="slider">{{range-slider start=actualMinMaxPrice range=priceRange change="sliderChanged" slide="sliderSliding"}}</div>
+            <h4 class="h4-custom products-available">{{availableItems.length}} Products Available</h4>
 
-            <div class="text-center prices">
-                <h4>
-                    <div class="pull-left">R{{displayedMinPrice}}</div>
-                    Price Range
-                    <div class="pull-right">R{{displayedMaxPrice}}</div>
-                </h4>
-            </div>
-            <br/>
-          {{range-slider start=actualMinMaxPrice range=priceRange change="sliderChanged" slide="sliderSliding"}}
-            <br/>
-          {{availableItems.length}} Products Available
-            <br/>
-            Reset All
-            <br/>
-            <br/>
-            <button class="btn btn-primary btn-lg btn-block" {{action 'viewProductsClicked'}}>VIEW PRODUCTS</button>
+            <p><a href=# {{action 'resetAll'}}>Reset All</a></p>
+            <button class="btn btn-success btn-lg btn-block" {{action 'viewProductsClicked'}}>VIEW PRODUCTS</button>
         </div>
     </div>
 
@@ -39,7 +26,7 @@
 
       {{#if levelOneDisplayed}}
           <div class="well well-lg">
-              <h4>Select a Category:</h4>
+              <h4 class="h4-custom">Select a Category</h4>
             {{#each item in levelOneItems}}
               {{#if item.selected}}
                   <button class="btn btn-primary btn-lg" {{action 'levelOneSelectionClicked' item.id}}>{{item.name}} </button>
@@ -52,7 +39,7 @@
 
       {{#if levelTwoDisplayed}}
           <div class="well well-lg">
-              <h4>Select a Sub-category:</h4>
+              <h4 class="h4-custom">Select Product Options</h4>
             {{#each item in levelTwoItems}}
               {{#if item.selected}}
                   <button class="btn btn-primary btn-lg" {{action 'levelTwoSelectionClicked' item.id}}>{{item.name}} </button>
@@ -65,7 +52,7 @@
 
       {{#if brandsDisplayed}}
           <div class="well well-lg">
-              <h4>Select Your Brands:</h4>
+              <h4 class="h4-custom">Select Your Brands</h4>
             {{#each brand in availableBrands}}
               {{#if brand.selected}}
                   <button class="btn btn-primary btn-lg" {{action 'brandSelectionClicked' brand.name}}>{{brand.name}} </button>
@@ -80,21 +67,31 @@
 
 </div>
 
-<div class="row">
-  {{!--{{#if noItemsFound}}
+<div>
+  {{#if displayProducts}}
+    {{#if noProductsFound}}
         Sorry, no products match your search. Please try again.
         <br/>
         <img src="img/sad-cupcake.png" height="200px">
-    {{/if}}--}}
-  {{#each item in availableItems}}
-      <div class="product col-md-1">
-        {{item.name}} <br/>
-          R {{item.price}} <br/>
-        {{item.brand}}
-      </div>
-  {{/each}}
-</div>
+    {{/if}}
 
-<div class="row">
-    <img src="img/puppy.jpg" height="200px">
+    {{#each item in availableItems}}
+        <div class="product well">
+            {{#if item.image}}
+                <img class="img-rounded img-responsive" src={{item.image}}>
+            {{/if}}
+          {{#unless item.image}}
+              <img class="img-rounded img-responsive" src="img/no-image.jpg">
+          {{/unless}}
+            <br/>
+
+            <p class="brand">{{item.brand}}</p>
+
+            <p class="product-name">{{item.name}} </p>
+
+            <p class="price"> R {{item.price}} </p>
+        </div>
+    {{/each}}
+
+  {{/if}}
 </div>
