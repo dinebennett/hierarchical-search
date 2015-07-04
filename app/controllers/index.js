@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
 
   displayProducts: false,
 
-  displayWelcome: function() {
+  displayWelcome: function () {
 
     if (this.get('displayProducts')) {
       return false;
@@ -30,13 +30,13 @@ export default Ember.Controller.extend({
 
     return true;
 
-  }.property('displayProducts','levelOneDisplayed','levelTwoDisplayed', 'brandsDisplayed'),
+  }.property('displayProducts', 'levelOneDisplayed', 'levelTwoDisplayed', 'brandsDisplayed'),
 
   enableSubCategories: function () {
     return (Ember.isBlank(this.get('levelOneSelection')) ? true : false);
   }.property('levelOneSelection'),
 
-  noProductsFound: function() {
+  noProductsFound: function () {
     return (this.get('availableItems').length > 0 ? false : true);
   }.property('availableItems'),
 
@@ -80,7 +80,7 @@ export default Ember.Controller.extend({
     var allLevelTwoItems = this.get('model').filter(function (item) {
       var check = false;
 
-      that.get('levelOneItems').forEach(function(levelOneItem) {
+      that.get('levelOneItems').forEach(function (levelOneItem) {
         if (('parent' in item) && (item.parent === levelOneItem.id)) {
           check = true;
         }
@@ -106,8 +106,8 @@ export default Ember.Controller.extend({
   }.property('levelOneSelection', 'levelTwoSelection'),
 
   availableItems: function () {
-      var items = getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), this.get('brandsSelection'),
-        this.get('displayedMinPrice'), this.get('displayedMaxPrice'));
+    var items = getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), this.get('brandsSelection'),
+      this.get('displayedMinPrice'), this.get('displayedMaxPrice'));
     return sortItemsByPrice(items);
   }.property('levelOneSelection', 'levelTwoSelection', 'brandsSelection', 'displayedMinPrice', 'displayedMaxPrice'),
 
@@ -131,7 +131,7 @@ export default Ember.Controller.extend({
     } else {
       return this.get('levelOneSelection').name;
     }
-  }.property('levelTwoSelection','levelOneSelection'),
+  }.property('levelTwoSelection', 'levelOneSelection'),
 
   levelTwoSelectionString: function () {
     if (this.get('levelTwoSelection').length > 1) {
@@ -143,7 +143,7 @@ export default Ember.Controller.extend({
     } else {
       return "All";
     }
-  }.property('levelTwoSelection','levelOneSelection'),
+  }.property('levelTwoSelection', 'levelOneSelection'),
 
   brandSelectionString: function () {
     if (this.get('brandsSelection').length > 1) {
@@ -170,7 +170,7 @@ export default Ember.Controller.extend({
       this.set('levelTwoDisplayed', false);
       this.set('brandsDisplayed', !this.get('brandsDisplayed'));
     },
-    resetAll: function() {
+    resetAll: function () {
       this.set('displayProducts', false);
       this.set('levelOneDisplayed', false);
       this.set('levelTwoDisplayed', false);
@@ -287,6 +287,12 @@ function getMinMaxPrice(items) {
   return [min, max];
 }
 
+/**
+ * Sort items by Price Descending
+ *
+ * @param items
+ * @returns {Array.<T>|*}
+ */
 function sortItemsByPrice(items) {
   return items.sort(function (a, b) {
     if (a.price === b.price) {
