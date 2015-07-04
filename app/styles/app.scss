@@ -7,7 +7,7 @@ $gray:                   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:             lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 
-$brand-primary:         darken(rgb(255, 121, 133), 6.5%) !default; // #337ab7
+$brand-primary:         darken(rgb(245, 110, 166), 6.5%) !default; // #337ab7
 $brand-success: #39932f !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
@@ -16,7 +16,7 @@ $font-family-sans-serif: Arial, Helvetica, sans-serif !default;
 
 //== Wells
 
-$well-bg: #e8e8e8 !default;
+$well-bg: #eaeaea !default;
 $well-border:                 darken($well-bg, 7%) !default;
 
 //** Global textual link color.
@@ -29,13 +29,16 @@ $link-hover-decoration: underline !default;
 @import "bootstrap";
 
 .h4-custom {
-  font-weight: 900;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
+.products {
+  margin: auto 0px;
+}
+
 .product {
-  width: 200px;
-  height: 300px;
+  max-width: 225px;
   margin-right: 10px;
   display: inline-block;
   padding: 10px;
@@ -43,11 +46,12 @@ $link-hover-decoration: underline !default;
 
 .h1-custom {
   font-family: 'Abril Fatface';
-  font-size: 55px;
+  font-size: 70px;
+  color: $brand-primary;
+  letter-spacing: 3px;
 }
 
 .h3-custom {
-  font-family: 'Playfair Display';
   font-size: 30px;
   font-weight: 100;
 }
@@ -58,15 +62,12 @@ html {
 
 body {
   height: 100%;
-  background-image: url('../img/jimmies.jpg');
-  background-size: 100% auto;
+  background-image: url('../img/sprinkles.jpg');
   background-position: top right;
   background-repeat: no-repeat;
-  background-color: #E8E8E8;;
 }
 
 .container {
-  background-color: rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
   min-height: 100%;
 }
@@ -77,7 +78,7 @@ body > .ember-view {
 
 .price {
   color: $brand-primary;
-  font-weight: 800;
+  font-weight: 600;
   font-size: 16px;
 }
 
@@ -109,9 +110,27 @@ body > .ember-view {
 
 .product-name {
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .glyphicon {
   margin-left: 10px;
+}
+
+.brand {
+  margin-top: 10px;
+}
+
+.no-products {
+  font-family: 'Covered By Your Grace', cursive;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  font-size: 35px;
+}
+
+.welcome {
+  font-family: 'Covered By Your Grace', cursive;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  font-size: 30px;
 }
