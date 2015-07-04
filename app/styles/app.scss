@@ -14,18 +14,6 @@ $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 $font-family-sans-serif: Arial, Helvetica, sans-serif !default;
 
-//== Wells
-
-$well-bg: #eaeaea !default;
-$well-border:                 darken($well-bg, 7%) !default;
-
-//** Global textual link color.
-$link-color:            $brand-primary !default;
-//** Link hover color set via `darken()` function.
-$link-hover-color:      darken($link-color, 15%) !default;
-//** Link hover decoration.
-$link-hover-decoration: underline !default;
-
 @import "bootstrap";
 
 .h4-custom {
@@ -124,13 +112,13 @@ body > .ember-view {
 .no-products {
   font-family: 'Covered By Your Grace', cursive;
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 20px;
-  font-size: 35px;
+  padding: 20px 30px;
+  font-size: 40px;
 }
 
 .welcome {
   font-family: 'Covered By Your Grace', cursive;
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 20px;
-  font-size: 30px;
+  padding: 20px 30px;
+  font-size: 40px;
 }
