@@ -31,7 +31,7 @@ export default Ember.Route.extend({
       {id: 19, name: "Mixers", parent: 4},
       {id: 20, name: "Other Pastry Tools", parent: 4},
 
-      {id: 21, name: "Flour", parent: 5, price: 35, brand: "Snowflake"}, //Level 3, Parent: Dry Ingredients
+      {id: 21, name: "Flour", parent: 5, price: 35, brand: "Snowflake", image: "img/products/snowflake-cake-wheat-flour.jpg"}, //Level 3, Parent: Dry Ingredients
       {id: 22, name: "Baking Powder", parent: 5, price: 30, brand: "Snowflake"},
       {id: 23, name: "Baking Soda", parent: 5, price: 25, brand: "Royal"},
       {id: 24, name: "Cocoa", parent: 5, price: 50, brand: "Nestle"},

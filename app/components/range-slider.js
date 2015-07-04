@@ -15,7 +15,6 @@ export default Ember.Component.extend({
   min: 0,
   max: 100,
   range: Ember.computed("min", "max", function () {
-    console.log("getting range " + this.get('min') + " " + this.get('max'));
     return {
       min: this.get('min'),
       max: this.get('max')
@@ -23,7 +22,6 @@ export default Ember.Component.extend({
   }),
 
   didInsertElement: function () {
-    console.log("didInsertElement");
     this.slider = this.$().noUiSlider({
       start: this.get('start'),
       step: this.get('step'),

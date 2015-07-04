@@ -1,39 +1,56 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+
   levelOneDisplayed: false,
+
   levelOneSelection: null,
+
   levelTwoDisplayed: false,
+
   levelTwoSelection: [],
+
   brandsDisplayed: false,
-  brandsSelected: [],
-  productsToDisplay: null,
+
+  brandsSelection: [],
+
+  displayProducts: false,
+
+  noProductsFound: function() {
+    return (this.get('availableItems').length > 0 ? false : true);
+  }.property('availableItems'),
+
   levelOneChevron: function () {
-    return (this.get('levelOneDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
+    return (this.get('levelOneDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down");
   }.property('levelOneDisplayed'),
+
   levelTwoChevron: function () {
-    return (this.get('levelTwoDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
+    return (this.get('levelTwoDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down");
   }.property('levelTwoDisplayed'),
+
   brandsChevron: function () {
-    return (this.get('brandsDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down") + " pull-right";
+    return (this.get('brandsDisplayed') ? "glyphicon glyphicon-chevron-right" : "glyphicon glyphicon-chevron-down");
   }.property('brandsDisplayed'),
+
   actualMinMaxPrice: function () {
     return getMinMaxPrice(this.get('availableItemsNoBrandsOrPriceLimits'));
   }.property('availableItemsNoBrandsOrPriceLimits'),
+
   priceRange: function () {
-    console.log("updating price range");
     var range = {
       'min': [this.get('actualMinMaxPrice')[0]],
       'max': [this.get('actualMinMaxPrice')[1]]
     };
     return range;
   }.property('actualMinMaxPrice'),
+
   levelOneItems: function () {
     var allLevelOneItems = this.get('model').filter(function (item) {
       return !('parent' in item);
     });
     return markSelectedItemsInArray(allLevelOneItems, [this.get('levelOneSelection')]);
   }.property('levelOneSelection'),
+
   levelTwoItems: function () {
     var that = this;
     var allLevelTwoItems = this.get('model').filter(function (item) {
@@ -45,6 +62,26 @@ export default Ember.Controller.extend({
     });
     return markSelectedItemsInArray(allLevelTwoItems, this.get('levelTwoSelection'));
   }.property('levelOneSelection', 'levelTwoSelection'),
+
+  availableItems: function () {
+    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), this.get('brandsSelection'),
+      this.get('displayedMinPrice'), this.get('displayedMaxPrice'));
+  }.property('levelOneSelection', 'levelTwoSelection', 'brandsSelection', 'displayedMinPrice', 'displayedMaxPrice'),
+
+  availableItemsNoBrandsOrPriceLimits: function () {
+    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), []);
+  }.property('levelOneSelection', 'levelTwoSelection'),
+
+  availableBrands: function () {
+    var brands = [];
+    this.get('availableItemsNoBrandsOrPriceLimits').forEach(function (item) {
+      if (('brand' in item) && !(isBrandInList(item.brand, brands))) {
+        brands.push({name: item.brand});
+      }
+    });
+    return markSelectedBrandsInArray(brands, this.get('brandsSelection'));
+  }.property('availableItemsNoBrandsOrPriceLimits', 'brandsSelection'),
+
   levelTwoSelectionString: function () {
     if (this.get('levelTwoSelection').length > 1) {
       return "Multiple Selections...";
@@ -53,36 +90,16 @@ export default Ember.Controller.extend({
     }
     return "Product Options...";
   }.property('levelTwoSelection'),
-  availableItems: function () {
-    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), this.get('brandsSelected'), this.get('displayedMinPrice'), this.get('displayedMaxPrice'));
-  }.property('levelOneSelection', 'levelTwoSelection', 'brandsSelected', 'displayedMinPrice', 'displayedMaxPrice'),
-  availableItemsNoBrandsOrPriceLimits: function () {
-    return getAvailableItems(this.get('levelTwoSelection'), this.get('levelTwoItems'), this.get('model'), []);
-  }.property('levelOneSelection', 'levelTwoSelection'),
-  availableBrands: function () {
-    var brands = [];
-    this.get('availableItemsNoBrandsOrPriceLimits').forEach(function (item) {
-      if (('brand' in item) && !(isBrandInList(item.brand, brands))) {
-        brands.push({name: item.brand});
-      }
-    });
-    return markSelectedBrandsInArray(brands, this.get('brandsSelected'));
-  }.property('availableItemsNoBrandsOrPriceLimits', 'brandsSelected'),
+
   brandSelectionString: function () {
-    if (this.get('brandsSelected').length > 1) {
+    if (this.get('brandsSelection').length > 1) {
       return "Multiple Brands...";
-    } else if (this.get('brandsSelected').length === 1) {
-      return (this.get('brandsSelected'))[0].name;
+    } else if (this.get('brandsSelection').length === 1) {
+      return (this.get('brandsSelection'))[0].name;
     }
     return "All Brands";
-  }.property('brandsSelected'),
-  noItemsFound: function () {
-    if (this.get('productsToDisplay') === null) {
-      return false;
-    } else {
-      return (this.get('productsToDisplay').length === 0);
-    }
-  }.property('productsToDisplay'),
+  }.property('brandsSelection'),
+
   actions: {
     levelOneClicked: function () {
       this.set('levelTwoDisplayed', false);
@@ -99,13 +116,22 @@ export default Ember.Controller.extend({
       this.set('levelTwoDisplayed', false);
       this.set('brandsDisplayed', !this.get('brandsDisplayed'));
     },
+    resetAll: function() {
+      var selectedItem = this.get('model')[0];
+      this.set('displayProducts', false);
+      this.set('levelOneSelection', selectedItem);
+      this.set('levelTwoSelection', []);
+      this.set('brandsSelection', []);
+      this.set('displayedMinPrice', this.get('actualMinMaxPrice')[0]);
+      this.set('displayedMaxPrice', this.get('actualMinMaxPrice')[1]);
+    },
     levelOneSelectionClicked: function (selectionId) {
       var selectedItem = this.get('model').filter(function (item) {
         return (item.id === selectionId);
       })[0];
       this.set('levelOneSelection', selectedItem);
       this.set('levelTwoSelection', []);
-      this.set('brandsSelected', []);
+      this.set('brandsSelection', []);
       this.set('displayedMinPrice', this.get('actualMinMaxPrice')[0]);
       this.set('displayedMaxPrice', this.get('actualMinMaxPrice')[1]);
     },
@@ -113,16 +139,16 @@ export default Ember.Controller.extend({
       var selectedItem = this.get('model').filter(function (item) {
         return (item.id === selectionId);
       })[0];
-      this.set('brandsSelected', []);
+      this.set('brandsSelection', []);
       this.set('levelTwoSelection', toggleSelectionInList(selectedItem, Ember.copy(this.get('levelTwoSelection'))));
       this.set('displayedMinPrice', this.get('actualMinMaxPrice')[0]);
       this.set('displayedMaxPrice', this.get('actualMinMaxPrice')[1]);
     },
     brandSelectionClicked: function (brand) {
-      this.set('brandsSelected', toggleBrandInList(brand, Ember.copy(this.get('brandsSelected'))))
+      this.set('brandsSelection', toggleBrandInList(brand, Ember.copy(this.get('brandsSelection'))));
     },
     viewProductsClicked: function () {
-      this.set('productsToDisplay', this.get('availableItems'));
+      this.set('displayProducts', true);
     },
     sliderChanged: function (value) {
       this.set('displayedMinPrice', Math.floor(value[0]));
@@ -177,6 +203,7 @@ function getAvailableItems(levelTwoSelection, levelTwoItems, items, brandsToIncl
 /**
  * Get the min and max price of all items in the list.
  * In the interest of Functional Programming, there are no side effects.
+ *
  * @param items An array of items.
  * @returns {*} An array of format [min, max].
  */
@@ -204,6 +231,7 @@ function getMinMaxPrice(items) {
 /**
  * If the item is in the list, it will be removed. If it is not in the list, it will be added.
  * In the interest of Functional Programming, there are no side effects.
+ *
  * @param newItem Item to be added or removed.
  * @param list  List of items.
  * @returns {*} The modified list.
@@ -226,6 +254,7 @@ function toggleSelectionInList(newItem, list) {
 /**
  * Adds selected = true to all the selected items.
  * In the interest of Functional Programming, there are no side effects.
+ *
  * @param array
  * @param selectedItems
  * @returns {*}
@@ -242,40 +271,59 @@ function markSelectedItemsInArray(array, selectedItems) {
   });
 }
 
-function toggleBrandInList(newItem, list) {
+/**
+ * Toggles brand in list. If the brand is already in the list, it will be removed. Otherwise, it will be added.
+ *
+ * @param brand Name of the brand to toggle
+ * @param brandList List of brands
+ * @returns {*} The resulting list of brands
+ */
+function toggleBrandInList(brand, brandList) {
   var idx = -1;
-  list.forEach(function (item, index) {
-    if (item.name === newItem) {
+  brandList.forEach(function (brandListItem, index) {
+    if (brandListItem.name === brand) {
       idx = index;
     }
   });
   if (idx > -1) {
-    list.splice(idx, 1);
+    brandList.splice(idx, 1);
   } else {
-    list.push({name: newItem});
+    brandList.push({name: brand});
   }
-  return list;
+  return brandList;
 }
 
-function isBrandInList(brand, list) {
+/**
+ * Checks whether a brand name exists in the list.
+ * @param brand
+ * @param brandList
+ * @returns {boolean} True if it does exist, false if it doesn't.
+ */
+function isBrandInList(brand, brandList) {
   var isInList = false;
-  list.forEach(function (item) {
-    if (item.name === brand) {
+  brandList.forEach(function (brandListItem) {
+    if (brandListItem.name === brand) {
       isInList = true;
     }
   });
   return isInList;
 }
 
-function markSelectedBrandsInArray(array, selectedBrands) {
-  var map = array.map(function (brand) {
-    var emberItem = Ember.Object.create(brand);
+/**
+ * Takes the list of brands and sets selected = true where brands have been selected.
+ *
+ * @param allBrands
+ * @param selectedBrands
+ * @returns {*}
+ */
+function markSelectedBrandsInArray(allBrands, selectedBrands) {
+  return allBrands.map(function (brand) {
+    var brandObject = Ember.Object.create(brand);
     selectedBrands.forEach(function (selectedBrand) {
       if (brand.name === selectedBrand.name) {
-        emberItem.selected = true;
+        brandObject.selected = true;
       }
     });
-    return emberItem;
+    return brandObject;
   });
-  return map;
 }
