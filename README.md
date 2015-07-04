@@ -10,6 +10,12 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 
 ### Viewing it on your own machine
 
+**Option 1:**
+* Download version 1.0.0 here: https://github.com/dinebennett/hierarchical-search/releases/download/1.0.0/dist.zip
+* Unzip it to a new directory on your machine
+* Open index.html in your browser
+
+**Option 2:**
 * Clone my repository: `git clone https://github.com/dinebennett/hierarchical-search.git` 
 * navigate to /hierarchical-search/dist
 * open index.html in your browser
