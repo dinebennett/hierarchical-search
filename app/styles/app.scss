@@ -63,6 +63,7 @@ body {
 .container {
   box-sizing: border-box;
   min-height: 100%;
+  padding-bottom: 120px;
 }
 
 body > .ember-view {
@@ -127,3 +128,15 @@ body > .ember-view {
   padding: 20px 30px;
   font-size: 40px;
 }
+
+.footer {
+  width: 100%;
+  margin-top: -60px;
+  position: relative;
+  clear: both;
+  background-color: $gray-darker;
+  color: $gray-light;
+  padding-top: 20px;
+  height: 60px;
+}
+

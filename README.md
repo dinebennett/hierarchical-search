@@ -23,11 +23,6 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 * Google Fonts for custom fonts
 * Github and Github Pages (doh!)
 
-### Wishlist
-
-* Add footer and mention images and "inspired by" ao.com
-* More comments in code
-
 ### Limitations
 
 **Due to time restrictions my demo has the following limitations:**
@@ -37,6 +32,7 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 * I haven't tested on all browsers - thorough testing was only done on Chrome
 * No unit tests or acceptance tests :(
 * I don't use an API. Everything is set up in routes/index.js. The route can however fetch data from an API in future.
+* As a result of loading the data (and images) in the app, the loading time is very long. This is obviously undesirable :(
 
 ### Main files for code review
 
