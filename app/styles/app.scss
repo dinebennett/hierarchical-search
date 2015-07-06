@@ -39,16 +39,6 @@ $font-family-sans-serif: Arial, Helvetica, sans-serif !default;
   letter-spacing: 3px;
 }
 
-.h1-mobile {
-  font-family: 'Abril Fatface';
-  color: $brand-primary;
-}
-
-.h3-custom {
-  font-size: 30px;
-  font-weight: 100;
-}
-
 html {
   height: 100%;
 }
@@ -119,14 +109,14 @@ body > .ember-view {
   font-family: 'Covered By Your Grace', cursive;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 20px 30px;
-  font-size: 40px;
+  font-size: $font-size-h2;
 }
 
 .welcome {
   font-family: 'Covered By Your Grace', cursive;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 20px 30px;
-  font-size: 40px;
+  font-size: $font-size-h1;
 }
 
 .footer {
@@ -140,3 +130,12 @@ body > .ember-view {
   height: 60px;
 }
 
+.mobile-warning {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 30px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
