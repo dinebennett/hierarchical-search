@@ -12,13 +12,24 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 
 **Option 1:**
 * Download version 1.0.0 here: https://github.com/dinebennett/hierarchical-search/releases/download/1.0.0/dist.zip
-* Unzip it to a new directory on your machine
+* Unzip it to an empty new directory on your machine
 * Open index.html in your browser
 
 **Option 2:**
 * Clone my repository: `git clone https://github.com/dinebennett/hierarchical-search.git` 
-* navigate to /hierarchical-search/dist
-* open index.html in your browser
+* Navigate to /hierarchical-search/dist
+* Open index.html in your browser
+
+### Limitations
+
+**Due to time restrictions my demo has the following limitations:**
+
+* I haven't optimized for mobile. One a device with screen < 768px, the demo is unfortunately not visible.
+* I don't store the user's selection in localStorage, so when they refresh their selections are lost.
+* I haven't tested on all browsers - thorough testing was only done on Chrome
+* I don't use an API. The data is set up as a Json array in routes/index.js. The route can however fetch data from an API in future.
+* As a result of loading the data and images all up front, the loading time is longer than would be ideal.
+* No unit tests or acceptance tests :(
 
 ### Technologies Used
 
@@ -27,25 +38,14 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 * Sass CSS preprocessor (see app.scss for modifications to default bootstrap)
 * noUiSlider for price range selection (see app/components/range-slider for Ember component)
 * Google Fonts for custom fonts
-* Github and Github Pages (doh!)
-
-### Limitations
-
-**Due to time restrictions my demo has the following limitations:**
-
-* I don't store the user's selection in localStorage, so unfortunately when they refresh their selections are lost.
-* I haven't optimized for mobile
-* I haven't tested on all browsers - thorough testing was only done on Chrome
-* No unit tests or acceptance tests :(
-* I don't use an API. Everything is set up in routes/index.js. The route can however fetch data from an API in future.
-* As a result of loading the data (and images) in the app, the loading time is very long. This is obviously undesirable :(
+* Github and Github Pages
 
 ### Main files for code review
 
-* app/components/range-slider
 * app/controllers/index.js
 * app/routes/index.js
 * app/templates/index.hbs
+* app/components/range-slider.js
 
 # Want to install the development version?
 

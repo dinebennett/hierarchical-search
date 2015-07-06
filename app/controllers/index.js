@@ -288,7 +288,7 @@ function getMinMaxPrice(items) {
 }
 
 /**
- * Sort items by Price Descending
+ * Sort items in ascending price order.
  *
  * @param items
  * @returns {Array.<T>|*}
