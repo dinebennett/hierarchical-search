@@ -11,7 +11,7 @@ To view it online, please go to: http://dinebennett.github.io/hierarchical-searc
 ### Viewing it on your own machine
 
 **Option 1:**
-* Download version 1.0.0 here: https://github.com/dinebennett/hierarchical-search/releases/download/1.0.0/dist.zip
+* Download version 1.0.1 here: https://github.com/dinebennett/hierarchical-search/releases/download/1.0.1/dist.zip
 * Unzip it to an empty new directory on your machine
 * Open index.html in your browser
 
